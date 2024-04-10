@@ -1,5 +1,5 @@
 // pages/app/index.tsx
-
+'use client'
 import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { Card, CardContent } from './_components/ui/card';
@@ -8,6 +8,7 @@ import Header from './_components/header';
 import {format} from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import ReactMarkdown from 'react-markdown';
+import { useEffect, useState } from 'react';
 
 interface PostData {
   id: number;
@@ -21,21 +22,35 @@ interface HomeProps {
   posts: PostData[];
 }
 
-async function getPosts() {
-  const response = await fetch('https://api.github.com/repos/mat-garcia/matgdev-blog/issues?state=open');
-  const data = await response.json();
-  const posts = data.map((post: PostData) => ({
-    id: post.id,
-    number: post.number,
-    title: post.title,
-    created_at: post.created_at,
-    body: post.body
-  }));
-  return posts;
-}
 
-export default async function Home() {
-  const posts = await getPosts();
+
+export default function Home() {
+  const [posts, setPosts] = useState<PostData[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch('https://api.github.com/repos/mat-garcia/matgdev-blog/issues?state=open');
+        const data = await response.json();
+        const postsData = data.map((post: PostData) => ({
+          id: post.id,
+          number: post.number,
+          title: post.title,
+          created_at: post.created_at,
+          body: post.body
+        }));
+        setPosts(postsData);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    }
+
+    fetchPosts();
+  }, [posts]);
+  
+  if (!posts) return <div className="flex items-center justify-center h-screen animate-bounce">
+  <div className="animate-spin  text-5xl ">{'</>'}</div>
+</div>;
 
   return (
     <>
