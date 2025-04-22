@@ -8,7 +8,7 @@ const About = () => {
         <div className='flex flex-col'>
             <h1 className='border-b border-solid pb-1 border-cyan-400'>About</h1>
         </div>
-        <p className="text-2xl pt-10">Olá me chamo <b>Mateus Garcia</b> e sou <b>Desenvolvedor Fullstack</b> com mais de 3 anos de xp. <br/></p>
+        <p className="text-2xl pt-10">Olá me chamo <b>Mateus Garcia</b> e sou <b>Desenvolvedor Fullstack</b> com mais de 4 anos de xp. <br/></p>
         <p className="text-xl text-gray-300 pt-10 "> 
                 
             Ao longa desses anos eu trabalhei em projetos do setor Hoteleiro utilizando técnologias como php, java e spring boot. <br/>
